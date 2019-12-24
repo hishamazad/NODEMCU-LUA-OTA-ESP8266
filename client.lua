@@ -179,7 +179,7 @@ wifi.sta.config(station_cfg)
 wifi.sta.autoconnect (1)
 
 iFail = 20 -- trying to connect to AP in 20sec, if not then reboot
-tmr.alarm (1, 1000, 1, function ( )
+tmr.create():alarm (1000, 1, function ( )
   iFail = iFail -1
   print(iFail)
   if (iFail == 0) then
@@ -193,7 +193,7 @@ tmr.alarm (1, 1000, 1, function ( )
     print(s.ssid..": "..iFail)
   else
     print ("ip: " .. wifi.sta.getip ( ))
-    tmr.stop (1)
+    tmr.create():stop (1)
     -- get list of files
     sk=net.createConnection(net.TCP, 0)
     cmd = "GET /".. s.path .."/node.php?id="..id.."&list"..
