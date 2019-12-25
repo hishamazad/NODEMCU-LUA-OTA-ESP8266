@@ -24,8 +24,6 @@ function SaveXY(sErr)
     collectgarbage()
 end
 
-
-
 function update()
 conn=net.createConnection(net.TCP, 0)
     conn:on("connection",function(conn, payload)
@@ -61,7 +59,7 @@ LoadX()
 if (s.host~="") then
 --if (s.host and s.domain and s.path) then
     if (tonumber(s.update)>0) then
-        tmr.alarm (0, tonumber(s.update)*60000, 1, function()
+        tmr.create():alarm (tonumber(s.update)*60000, 1, function()
                 print("checking for update")
                 update()
             end)
