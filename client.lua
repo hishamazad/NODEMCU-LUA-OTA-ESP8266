@@ -1,4 +1,3 @@
-
 function SaveX(sErr)
     if (sErr) then
         s.err = sErr
@@ -34,7 +33,6 @@ function dwn()
         s.boot = bootfile..".lc"
         SaveX("No error")
         node.restart()
-
     else 
         print("Filename: "..v)
         filename=v
@@ -94,7 +92,7 @@ function FileList(sck,c)
     print("length: "..string.len(c))
 
     data = mysplit(c, "\n") -- fill the field with filenames
-    
+
     --for k,v in pairs(data) do
     n = 1
     v = data[n]
@@ -141,10 +139,6 @@ function FileList(sck,c)
                       "Accept: */*\r\n\r\n")
             end)
             conn:connect(80,s.host)
-
-
-
-
     --end
     collectgarbage()
 
@@ -164,20 +158,19 @@ wifi.sta.config(station_cfg)
 wifi.sta.autoconnect (1)
 
 iFail = 20 -- trying to connect to AP in 20sec, if not then reboot
-tmr.alarm (1, 1000, 1, function ( )
+tmr.create():alarm (1000, 1, function ( )
   iFail = iFail -1
   print(iFail)
   if (iFail == 0) then
     SaveX("could not access "..s.ssid)
     node.restart()
-  end      
-  
+  end  
 
   if wifi.sta.getip ( ) == nil then
     print(s.ssid..": "..iFail)
   else
     print ("ip: " .. wifi.sta.getip ( ))
-    tmr.stop (1)
+    tmr.create():stop (1)
     -- get list of files
     sk=net.createConnection(net.TCP, 0)
     sk:on("connection",function(conn, payload)
@@ -198,6 +191,4 @@ tmr.alarm (1, 1000, 1, function ( )
  
 end)
 
-
-
- print(collectgarbage("count").." kB used")
+print(collectgarbage("count").." kB used")
